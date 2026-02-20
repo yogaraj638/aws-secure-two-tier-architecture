@@ -1,0 +1,47 @@
+============================================================
+AWS NETWORKING & INFRASTRUCTURE BLUEPRINT
+============================================================
+
+PROJECT NAME: Secure Two-Tier Web Architecture
+ENVIRONMENT: Production-Simulation (VPC Real Time Project)
+
+1. VPC CONFIGURATION
+--------------------
+- CIDR Block: 10.0.0.0/16
+- DNS Resolution: Enabled
+- DNS Hostnames: Enabled
+
+2. SUBNET LAYOUT
+----------------
+- Public Subnet:  10.0.1.0/24 (Availability Zone: A)
+  * Purpose: Hosts Bastion Host / Public Facing Resources
+- Private Subnet: 10.0.2.0/24 (Availability Zone: B)
+  * Purpose: Hosts Apache Web Server / Application Logic
+
+3. GATEWAY & ROUTING
+--------------------
+- Internet Gateway (IGW): Attached to VPC for Public Subnet egress.
+- NAT Gateway: Deployed in Public Subnet to provide internet access to Private Subnet.
+- Route Table (Public): 0.0.0.0/0 -> IGW
+- Route Table (Private): 0.0.0.0/0 -> NAT Gateway
+
+4. COMPUTE INSTANCES
+--------------------
+- Bastion Host (Jump Server):
+  * OS: Amazon Linux 2023
+  * IP: Public IP Assigned
+- Web Server:
+  * OS: Amazon Linux 2023
+  * IP: Private Only (10.0.2.x)
+
+5. SECURITY GROUP RULES (LEAST PRIVILEGE)
+-----------------------------------------
+[Bastion-SG]
+- Inbound: SSH (22) from [Admin_IP]
+- Outbound: All
+
+[WebServer-SG]
+- Inbound: SSH (22) from [Bastion-SG]
+- Inbound: HTTP (80) from [Bastion-SG]
+- Outbound: All
+============================================================
