@@ -11,7 +11,11 @@ To design and deploy a highly secure web environment using a **Public/Private Su
 * **Security Groups:** * **Bastion:** Allows SSH (22) from My IP.
     * **Web Server:** Allows HTTP (80) and SSH (22) only from the Bastion Security Group.
 
-    ![AWS Architecture Map](Resource Map.png)
+   <div align="center">
+  <h3>VPC Infrastructure Resource Map</h3>
+  <img src="Resource%20Map.png" alt="AWS Resource Map" width="900">
+  <p><i>Visual verification of Subnet associations and Route Table connectivity.</i></p>
+</div>
 
 ## Deployment and Proof of Work
 Since this server is hosted in a private subnet, it is not accessible via a public URL. Access is verified via **SSH Tunneling** from the Bastion Host to the Private IP.
